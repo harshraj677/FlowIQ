@@ -1,6 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
-import { FlashList } from '@shopify/flash-list';
+import { FlatList, View } from 'react-native';
 import { router } from 'expo-router';
 
 import { InvoiceCard } from '@components/cards/InvoiceCard';
@@ -64,7 +63,7 @@ export function BillsHistoryScreen() {
           onAction={() => router.push(ROUTES.bill as never)}
         />
       ) : (
-        <FlashList
+        <FlatList
           data={invoices}
           keyExtractor={(item) => item.id}
           contentContainerStyle={{ padding: 16 }}

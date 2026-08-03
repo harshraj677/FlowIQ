@@ -1,7 +1,6 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { FlatList, Text, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { FlashList } from '@shopify/flash-list';
 import { useLocalSearchParams } from 'expo-router';
 
 import { Card } from '@components/common/Card';
@@ -87,7 +86,7 @@ export function StockHistoryScreen() {
           description="Purchases and bills will appear here."
         />
       ) : (
-        <FlashList
+        <FlatList
           data={data}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => <MovementRow movement={item} />}

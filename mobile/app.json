@@ -8,23 +8,11 @@
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "backgroundColor": "#2563EB",
-    "newArchEnabled": true,
-    "ios": {
-      "supportsTablet": false,
-      "bundleIdentifier": "com.flowiq.distributor"
-    },
-    "android": {
-      "package": "com.flowiq.distributor",
-      "adaptiveIcon": {
-        "backgroundColor": "#2563EB",
-        "foregroundImage": "./assets/android-icon-foreground.png",
-        "backgroundImage": "./assets/android-icon-background.png",
-        "monochromeImage": "./assets/android-icon-monochrome.png"
-      },
-      "predictiveBackGestureEnabled": false
-    },
+    "platforms": ["web"],
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/favicon.png",
+      "bundler": "metro",
+      "output": "static"
     },
     "plugins": [
       "expo-router",
@@ -37,8 +25,7 @@
           "backgroundColor": "#2563EB"
         }
       ],
-      "expo-font",
-      "@react-native-community/datetimepicker"
+      "expo-font"
     ],
     "extra": {
       "router": {}

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { Pressable, Text, View } from 'react-native';
+import { FlatList, Pressable, Text, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { FlashList } from '@shopify/flash-list';
 import { router } from 'expo-router';
 
 import { CustomerCard } from '@components/cards/CustomerCard';
@@ -65,7 +64,7 @@ export function CustomersScreen() {
         }
       />
 
-      <FlashList
+      <FlatList
         data={customers}
         keyExtractor={(item) => item.id}
         contentContainerStyle={{ padding: 16 }}

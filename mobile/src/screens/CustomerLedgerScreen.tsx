@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { Pressable, Text, View } from 'react-native';
+import { FlatList, Pressable, Text, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { FlashList } from '@shopify/flash-list';
 import { router, useLocalSearchParams } from 'expo-router';
 
 import { InvoiceCard } from '@components/cards/InvoiceCard';
@@ -240,7 +239,7 @@ export function CustomerLedgerScreen() {
                 description="Ledger history will appear once bills or payments are recorded."
               />
             ) : (
-              <FlashList
+              <FlatList
                 data={ledger}
                 keyExtractor={(item) => item.id}
                 contentContainerStyle={{ padding: 16 }}
@@ -259,7 +258,7 @@ export function CustomerLedgerScreen() {
               description="Invoices for this customer will appear here."
             />
           ) : (
-            <FlashList
+            <FlatList
               data={invoices}
               keyExtractor={(item) => item.id}
               contentContainerStyle={{ padding: 16 }}

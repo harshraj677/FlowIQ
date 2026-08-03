@@ -1,7 +1,6 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { FlatList, Text, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { FlashList } from '@shopify/flash-list';
 
 import { Card } from '@components/common/Card';
 import { Divider } from '@components/common/Divider';
@@ -93,7 +92,7 @@ export function PurchaseHistoryScreen() {
           description="Record a stock purchase to see it here."
         />
       ) : (
-        <FlashList
+        <FlatList
           data={purchases}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => <PurchaseRow purchase={item} />}
