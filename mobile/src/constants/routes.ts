@@ -1,0 +1,15 @@
+export const ROUTES = {
+  dashboard: '/(tabs)/dashboard',
+  stock: '/(tabs)/stock',
+  bill: '/(tabs)/bill',
+  customers: '/(tabs)/customers',
+  more: '/(tabs)/more',
+  purchase: '/purchase',
+  bills: '/bills',
+  customerLedger: '/customer-ledger',
+  collections: '/collections',
+  transport: '/transport',
+  expenses: '/expenses',
+  reports: '/reports',
+  settings: '/settings',
+} as const;
