@@ -1,7 +1,7 @@
 /**
- * Domain types are intentionally minimal in Phase 1 — only an identity shape
- * so stores/services can be wired up. Full schemas land with each module's
- * business logic in later phases.
+ * Domain types are fleshed out module-by-module as business logic lands.
+ * Stock/Purchase (Phase 2) are fully modeled; the rest stay minimal identity
+ * shapes until their phase.
  */
 export interface BaseEntity {
   id: string;
@@ -9,11 +9,70 @@ export interface BaseEntity {
   updatedAt: string;
 }
 
-export interface Customer extends BaseEntity {
+export type ProductStatus = 'AVAILABLE' | 'LOW_STOCK' | 'OUT_OF_STOCK';
+
+export interface Product extends BaseEntity {
   name: string;
+  currentStock: number;
+  purchasePrice: number;
+  averagePurchasePrice: number;
+  lastPurchaseDate: string | null;
+  totalPurchased: number;
+  totalSold: number;
+  sellingPrice: number | null;
+  lowStockLimit: number;
+  stockValue: number;
+  status: ProductStatus;
 }
 
-export interface StockItem extends BaseEntity {
+export interface Supplier extends BaseEntity {
+  name: string;
+  phone: string | null;
+  address: string | null;
+  isDefault: boolean;
+}
+
+export interface PurchaseItem {
+  id: string;
+  product: { id: string; name: string } | string;
+  quantity: number;
+  purchasePrice: number;
+  amount: number;
+}
+
+export interface Purchase extends BaseEntity {
+  supplier: { id: string; name: string } | string;
+  purchaseDate: string;
+  invoiceNumber: string | null;
+  transportExpense: number;
+  remarks: string | null;
+  totalQuantity: number;
+  totalAmount: number;
+  createdBy: string;
+  items?: PurchaseItem[];
+}
+
+export type StockMovementType = 'PURCHASE' | 'SALE' | 'ADJUSTMENT';
+
+export interface StockMovement extends BaseEntity {
+  product: { id: string; name: string } | string;
+  type: StockMovementType;
+  quantity: number;
+  previousStock: number;
+  newStock: number;
+  remarks: string | null;
+  createdBy: string;
+}
+
+export interface DashboardSummary {
+  totalStockQuantity: number;
+  totalStockValue: number;
+  todaysPurchaseAmount: number;
+  todaysPurchaseCount: number;
+  monthPurchaseCost: number;
+}
+
+export interface Customer extends BaseEntity {
   name: string;
 }
 

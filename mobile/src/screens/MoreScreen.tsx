@@ -20,10 +20,17 @@ interface MoreMenuItem {
 const MENU_ITEMS: MoreMenuItem[] = [
   {
     key: 'purchase',
-    label: 'Purchase',
+    label: 'Purchase Stock',
     description: 'Add stock from suppliers',
     icon: 'cart-outline',
     href: ROUTES.purchase,
+  },
+  {
+    key: 'purchase-history',
+    label: 'Purchase History',
+    description: 'All stock purchases recorded',
+    icon: 'time-outline',
+    href: ROUTES.purchaseHistory,
   },
   {
     key: 'bills',

@@ -6,6 +6,8 @@ export * from './CreateBillScreen';
 export * from './CustomersScreen';
 export * from './MoreScreen';
 export * from './PurchaseScreen';
+export * from './PurchaseHistoryScreen';
+export * from './StockHistoryScreen';
 export * from './BillsHistoryScreen';
 export * from './CustomerLedgerScreen';
 export * from './CollectionsScreen';

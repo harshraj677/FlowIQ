@@ -5,6 +5,8 @@ export const ROUTES = {
   customers: '/(tabs)/customers',
   more: '/(tabs)/more',
   purchase: '/purchase',
+  purchaseHistory: '/purchase-history',
+  stockHistory: '/stock-history',
   bills: '/bills',
   customerLedger: '/customer-ledger',
   collections: '/collections',

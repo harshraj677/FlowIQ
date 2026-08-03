@@ -1,4 +1,4 @@
-import type { StockItem } from '@/types';
+import type { Product } from '@/types';
 import { createEntityStore } from './createEntityStore';
 
-export const useStockStore = createEntityStore<StockItem>();
+export const useStockStore = createEntityStore<Product>();

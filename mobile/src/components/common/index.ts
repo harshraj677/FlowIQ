@@ -13,3 +13,4 @@ export * from './Badge';
 export * from './Divider';
 export * from './QuantityStepper';
 export * from './SegmentedToggle';
+export * from './DateField';
