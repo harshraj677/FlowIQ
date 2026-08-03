@@ -4,6 +4,14 @@ import { withJsonTransform } from './plugins';
 
 export const CUSTOMER_STATUSES = ['ACTIVE', 'INACTIVE'] as const;
 
+const customerProductPriceSchema = new Schema(
+  {
+    product: { type: Schema.Types.ObjectId, ref: 'Product', required: true },
+    price: { type: Number, required: true, min: 0 },
+  },
+  { _id: false },
+);
+
 const customerSchema = new Schema(
   {
     shopName: { type: String, required: true, trim: true },
@@ -17,6 +25,9 @@ const customerSchema = new Schema(
     totalPaid: { type: Number, required: true, default: 0, min: 0 },
     outstanding: { type: Number, required: true, default: 0 },
     lastBillDate: { type: Date, default: null },
+    // Last selling price used per product for this customer — pre-fills the
+    // rate field on the bill form. Updated whenever a bill saves with a new price.
+    productPrices: { type: [customerProductPriceSchema], required: true, default: [] },
   },
   { timestamps: true },
 );

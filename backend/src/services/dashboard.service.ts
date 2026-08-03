@@ -1,4 +1,9 @@
-import { productRepository, purchaseRepository } from '@/repositories';
+import {
+  customerRepository,
+  invoiceRepository,
+  productRepository,
+  purchaseRepository,
+} from '@/repositories';
 
 export const dashboardService = {
   getStockSummary: async () => {
@@ -10,12 +15,18 @@ export const dashboardService = {
       0,
     );
 
-    const purchaseStats = await purchaseRepository.getPurchaseStats();
+    const [purchaseStats, salesStats, customerStats] = await Promise.all([
+      purchaseRepository.getPurchaseStats(),
+      invoiceRepository.getSalesStats(),
+      customerRepository.getSummaryStats(),
+    ]);
 
     return {
       totalStockQuantity,
       totalStockValue: Math.round(totalStockValue * 100) / 100,
       ...purchaseStats,
+      ...salesStats,
+      totalOutstanding: customerStats.totalOutstanding,
     };
   },
 };

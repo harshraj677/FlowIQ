@@ -63,6 +63,25 @@ export function DashboardScreen() {
               icon="calendar-outline"
               tone="primary"
             />
+            <StatCard
+              label="Today's Sales"
+              value={formatCurrency(data.todaysSalesAmount)}
+              subtitle={`${data.todaysBillsCount} bill${data.todaysBillsCount === 1 ? '' : 's'}`}
+              icon="document-text-outline"
+              tone="success"
+            />
+            <StatCard
+              label="Total Outstanding"
+              value={formatCurrency(data.totalOutstanding)}
+              icon="wallet-outline"
+              tone="danger"
+            />
+            <StatCard
+              label="Net Profit (Month)"
+              value={formatCurrency(data.monthNetProfit)}
+              icon="trending-up-outline"
+              tone="success"
+            />
           </View>
         </ScrollView>
       )}

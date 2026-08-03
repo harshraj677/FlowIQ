@@ -1,4 +1,4 @@
-import type { Bill } from '@/types';
+import type { Invoice } from '@/types';
 import { createEntityStore } from './createEntityStore';
 
-export const useBillStore = createEntityStore<Bill>();
+export const useBillStore = createEntityStore<Invoice>();

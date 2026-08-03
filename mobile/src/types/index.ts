@@ -70,6 +70,10 @@ export interface DashboardSummary {
   todaysPurchaseAmount: number;
   todaysPurchaseCount: number;
   monthPurchaseCost: number;
+  todaysSalesAmount: number;
+  todaysBillsCount: number;
+  monthNetProfit: number;
+  totalOutstanding: number;
 }
 
 export type CustomerStatus = 'ACTIVE' | 'INACTIVE';
@@ -86,6 +90,7 @@ export interface Customer extends BaseEntity {
   totalPaid: number;
   outstanding: number;
   lastBillDate: string | null;
+  productPrices: { product: string; price: number }[];
 }
 
 export type CustomerLedgerType = 'INVOICE' | 'COLLECTION' | 'ADJUSTMENT';
@@ -109,8 +114,35 @@ export interface CustomerSummary {
   topCustomer: { name: string; totalPurchase: number } | null;
 }
 
-export interface Bill extends BaseEntity {
-  billNumber: string;
+export type PaymentMode = 'CASH' | 'UPI';
+export type InvoiceStatus = 'PAID' | 'PENDING' | 'PARTIAL';
+
+export interface InvoiceItem {
+  id: string;
+  product: { id: string; name: string } | string;
+  quantity: number;
+  sellingPrice: number;
+  purchasePriceSnapshot: number;
+  amount: number;
+  profit: number;
+}
+
+export interface Invoice extends BaseEntity {
+  invoiceNumber: string;
+  customer: { id: string; shopName: string; phone: string } | string;
+  invoiceDate: string;
+  transportExpense: number;
+  remarks: string | null;
+  paymentMode: PaymentMode;
+  amountReceived: number;
+  totalQuantity: number;
+  totalAmount: number;
+  outstanding: number;
+  status: InvoiceStatus;
+  grossProfit: number;
+  netProfit: number;
+  createdBy: string;
+  items?: InvoiceItem[];
 }
 
 export interface Collection extends BaseEntity {

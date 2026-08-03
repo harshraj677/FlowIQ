@@ -75,4 +75,45 @@ export const customerRepository = {
         : null,
     };
   },
+
+  /**
+   * Applies a bill to a customer's running totals and returns the
+   * outstanding balance before/after so the caller can write matching
+   * ledger entries.
+   */
+  applySale: async (
+    customerId: string,
+    billAmount: number,
+    amountReceived: number,
+    billDate: Date,
+  ) => {
+    const customer = await Customer.findById(customerId);
+    if (!customer) {
+      throw new Error('Customer not found');
+    }
+
+    const previousOutstanding = customer.outstanding;
+
+    customer.totalPurchase += billAmount;
+    customer.totalPaid += amountReceived;
+    customer.lastBillDate = billDate;
+
+    await customer.save();
+
+    return { customer, previousOutstanding, newOutstanding: customer.outstanding };
+  },
+
+  /** Remembers the selling price used for a product so future bills pre-fill it. */
+  saveProductPrice: (customerId: string, productId: string, price: number) =>
+    Customer.updateOne(
+      { _id: customerId, 'productPrices.product': productId },
+      { $set: { 'productPrices.$.price': price } },
+    ).then(async (result) => {
+      if (result.matchedCount === 0) {
+        await Customer.updateOne(
+          { _id: customerId },
+          { $push: { productPrices: { product: productId, price } } },
+        );
+      }
+    }),
 };

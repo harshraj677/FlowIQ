@@ -48,4 +48,30 @@ export const productRepository = {
 
     return { product, previousStock, newStock };
   },
+
+  /**
+   * Applies a sale to a product's running totals and returns the stock
+   * levels before/after so the caller can record a matching stock movement.
+   */
+  applySale: async (productId: string, quantity: number) => {
+    const product = await Product.findById(productId);
+    if (!product) {
+      throw new Error('Product not found');
+    }
+    if (product.currentStock < quantity) {
+      throw new Error(
+        `Not enough stock for ${product.name}. Available: ${product.currentStock} pcs`,
+      );
+    }
+
+    const previousStock = product.currentStock;
+    const newStock = previousStock - quantity;
+
+    product.currentStock = newStock;
+    product.totalSold = product.totalSold + quantity;
+
+    await product.save();
+
+    return { product, previousStock, newStock };
+  },
 };

@@ -5,3 +5,5 @@ export * from './purchaseItem.repository';
 export * from './stockMovement.repository';
 export * from './customer.repository';
 export * from './customerLedger.repository';
+export * from './invoice.repository';
+export * from './invoiceItem.repository';

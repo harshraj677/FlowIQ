@@ -4,8 +4,9 @@ import { Ionicons } from '@expo/vector-icons';
 import { FlashList } from '@shopify/flash-list';
 import { router, useLocalSearchParams } from 'expo-router';
 
+import { InvoiceCard } from '@components/cards/InvoiceCard';
 import { StatCard } from '@components/cards/StatCard';
-import { Badge } from '@components/common/Badge';
+import { Badge, type BadgeTone } from '@components/common/Badge';
 import { Card } from '@components/common/Card';
 import { EmptyState } from '@components/common/EmptyState';
 import { ScreenHeader } from '@components/common/ScreenHeader';
@@ -13,9 +14,22 @@ import { SegmentedToggle } from '@components/common/SegmentedToggle';
 import { Skeleton, SkeletonCardRow } from '@components/common/Skeleton';
 import { ROUTES } from '@constants/routes';
 import { useCustomer, useCustomerLedger } from '@hooks/useCustomers';
+import { useInvoices } from '@hooks/useInvoices';
 import { colors, softColors } from '@theme/colors';
 import { formatCurrency } from '@utils/format';
-import type { CustomerLedgerEntry, CustomerLedgerType } from '@/types';
+import type { CustomerLedgerEntry, CustomerLedgerType, InvoiceStatus } from '@/types';
+
+const INVOICE_STATUS_LABEL: Record<InvoiceStatus, string> = {
+  PAID: 'Paid',
+  PENDING: 'Pending',
+  PARTIAL: 'Partial',
+};
+
+const INVOICE_STATUS_TONE: Record<InvoiceStatus, BadgeTone> = {
+  PAID: 'success',
+  PENDING: 'danger',
+  PARTIAL: 'warning',
+};
 
 const LEDGER_META: Record<
   CustomerLedgerType,
@@ -80,6 +94,13 @@ export function CustomerLedgerScreen() {
 
   const { data: customer, isLoading: customerLoading } = useCustomer(customerId);
   const { data: ledger, isLoading: ledgerLoading } = useCustomerLedger(customerId);
+  const { data: invoicesResult, isLoading: invoicesLoading } = useInvoices(
+    { customerId },
+    1,
+    20,
+    activeTab === 'bills' && Boolean(customerId),
+  );
+  const invoices = invoicesResult?.invoices ?? [];
 
   if (!customerId) {
     return (
@@ -226,11 +247,38 @@ export function CustomerLedgerScreen() {
                 renderItem={({ item }) => <LedgerRow entry={item} />}
               />
             )
-          ) : (
+          ) : invoicesLoading ? (
+            <View className="gap-3 px-4">
+              <SkeletonCardRow />
+              <SkeletonCardRow />
+            </View>
+          ) : invoices.length === 0 ? (
             <EmptyState
               emoji="🧾"
               title="No Bills Yet"
               description="Invoices for this customer will appear here."
+            />
+          ) : (
+            <FlashList
+              data={invoices}
+              keyExtractor={(item) => item.id}
+              contentContainerStyle={{ padding: 16 }}
+              renderItem={({ item }) => (
+                <View className="mb-3">
+                  <InvoiceCard
+                    billNumber={item.invoiceNumber}
+                    customerName={customer.shopName}
+                    date={new Date(item.invoiceDate).toLocaleDateString('en-IN', {
+                      day: '2-digit',
+                      month: 'short',
+                      year: 'numeric',
+                    })}
+                    amount={item.totalAmount}
+                    statusLabel={INVOICE_STATUS_LABEL[item.status]}
+                    statusTone={INVOICE_STATUS_TONE[item.status]}
+                  />
+                </View>
+              )}
             />
           )}
         </View>
