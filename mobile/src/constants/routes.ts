@@ -9,6 +9,7 @@ export const ROUTES = {
   stockHistory: '/stock-history',
   bills: '/bills',
   customerLedger: '/customer-ledger',
+  customerForm: '/customer-form',
   collections: '/collections',
   transport: '/transport',
   expenses: '/expenses',

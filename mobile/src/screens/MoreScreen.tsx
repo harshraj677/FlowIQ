@@ -40,13 +40,6 @@ const MENU_ITEMS: MoreMenuItem[] = [
     href: ROUTES.bills,
   },
   {
-    key: 'ledger',
-    label: 'Customer Ledger',
-    description: 'Dues and payment history',
-    icon: 'book-outline',
-    href: ROUTES.customerLedger,
-  },
-  {
     key: 'collections',
     label: 'Collections',
     description: 'Payments received',

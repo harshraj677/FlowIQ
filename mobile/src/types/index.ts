@@ -72,8 +72,41 @@ export interface DashboardSummary {
   monthPurchaseCost: number;
 }
 
+export type CustomerStatus = 'ACTIVE' | 'INACTIVE';
+
 export interface Customer extends BaseEntity {
-  name: string;
+  shopName: string;
+  ownerName: string | null;
+  phone: string;
+  address: string | null;
+  area: string | null;
+  notes: string | null;
+  status: CustomerStatus;
+  totalPurchase: number;
+  totalPaid: number;
+  outstanding: number;
+  lastBillDate: string | null;
+}
+
+export type CustomerLedgerType = 'INVOICE' | 'COLLECTION' | 'ADJUSTMENT';
+
+export interface CustomerLedgerEntry extends BaseEntity {
+  customer: { id: string; shopName: string } | string;
+  type: CustomerLedgerType;
+  amount: number;
+  previousOutstanding: number;
+  newOutstanding: number;
+  remarks: string | null;
+  createdBy: string;
+}
+
+export interface CustomerSummary {
+  totalCustomers: number;
+  activeCustomers: number;
+  todaysNewCustomers: number;
+  pendingCustomers: number;
+  totalOutstanding: number;
+  topCustomer: { name: string; totalPurchase: number } | null;
 }
 
 export interface Bill extends BaseEntity {

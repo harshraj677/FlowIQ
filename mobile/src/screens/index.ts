@@ -10,6 +10,7 @@ export * from './PurchaseHistoryScreen';
 export * from './StockHistoryScreen';
 export * from './BillsHistoryScreen';
 export * from './CustomerLedgerScreen';
+export * from './CustomerFormScreen';
 export * from './CollectionsScreen';
 export * from './TransportScreen';
 export * from './ExpensesScreen';

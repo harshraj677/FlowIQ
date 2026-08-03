@@ -1,5 +1,6 @@
 import { Router } from 'express';
 
+import { customerRouter } from './customer.routes';
 import { dashboardRouter } from './dashboard.routes';
 import { healthRouter } from './health.routes';
 import { productRouter } from './product.routes';
@@ -15,3 +16,4 @@ router.use('/purchases', purchaseRouter);
 router.use('/suppliers', supplierRouter);
 router.use('/stock-movements', stockMovementRouter);
 router.use('/dashboard', dashboardRouter);
+router.use('/customers', customerRouter);

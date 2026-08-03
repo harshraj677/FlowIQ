@@ -3,3 +3,5 @@ export * from './supplier.repository';
 export * from './purchase.repository';
 export * from './purchaseItem.repository';
 export * from './stockMovement.repository';
+export * from './customer.repository';
+export * from './customerLedger.repository';
