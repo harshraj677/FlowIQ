@@ -1,68 +1,79 @@
 # FlowIQ
 
-Distributor Management System — a production-grade ERP for a Bisleri
-distributor's daily operations (stock, billing, customers, collections,
-transport, expenses, reports).
+FlowIQ is a distributor management system for daily operations such as
+stock, billing, customers, collections, transport, expenses, and reports.
+The user-facing app runs as a web app built with Expo Router and
+react-native-web.
 
-Runs as a **web app** (React via Expo Router + react-native-web). See
-[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for how the pieces fit
-together.
+See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for the deeper breakdown of
+how the front end, backend, and shared patterns fit together.
 
-## Tech stack
+## What’s Included
 
-- **Web app**: Expo (React + react-native-web) + TypeScript, Expo Router,
-  NativeWind, React Query, Zustand, React Hook Form, Reanimated, Gesture
-  Handler
-- **Backend**: Node.js + Express + TypeScript
-- **Database**: MongoDB via Mongoose
+- Web app: Expo + React + TypeScript + NativeWind + React Query + Zustand
+- Backend: Node.js + Express + TypeScript + Mongoose
+- Database: MongoDB
+- Layout: monorepo with separate `mobile/`, `backend/`, `shared/`, `assets/`,
+  and `docs/` folders
 
-## Getting started
+## Quick Start
 
-### Web app
+### Web App
 
 ```bash
 cd mobile
 npm install
-cp .env.example .env   # already done for local dev
-npm run dev             # starts the web dev server (expo start --web)
+cp .env.example .env
+npm run dev
 ```
 
-No Android Studio, Xcode, SDKs, or emulators required — it opens directly
-in your browser. Other useful scripts: `npm run build` (static web export),
-`npm run lint`, `npm run typecheck`, `npm run format`.
+The app opens in the browser, so no Android Studio, Xcode, SDKs, or
+emulators are required. Useful scripts in `mobile/`:
+
+- `npm run web` for the web dev server
+- `npm run build` for static web export
+- `npm run lint`
+- `npm run typecheck`
+- `npm run format`
 
 ### Backend
 
 ```bash
 cd backend
 npm install
-cp .env.example .env    # already done for local dev — point MONGODB_URI
-                          # at your local/remote MongoDB instance
-npm run dev              # starts the API with hot reload on PORT (default 4000)
+cp .env.example .env
+npm run dev
 ```
 
-Once running, `GET http://localhost:4000/api/health` reports API and
-MongoDB connection status. Other scripts: `npm run lint`, `npm run
-typecheck`, `npm run build`, `npm run format`.
+Set `MONGODB_URI` in `backend/.env` to a local or remote MongoDB instance.
+Useful scripts in `backend/`:
 
-## Repository layout
+- `npm run build`
+- `npm run start`
+- `npm run lint`
+- `npm run typecheck`
+- `npm run format`
+
+When the API is running, `GET http://localhost:4000/api/health` reports API
+and MongoDB connection status.
+
+## Repository Layout
 
 ```
 flowiq/
-├── mobile/     Expo Router web app (despite the folder name — see below)
+├── mobile/     Expo Router web app
 ├── backend/    Express API
-├── shared/     Cross-cutting types (empty until needed)
-├── assets/     Design references / brand source files
+├── shared/     Cross-cutting types and shared utilities
+├── assets/     Design references and brand source files
 └── docs/       Architecture notes
 ```
 
-The `mobile/` folder name is a holdover from Phase 1, when the app targeted
-Android. It now builds for web only; the folder wasn't renamed to avoid
-churning every import path across the codebase.
+The `mobile/` folder name is historical. It now targets web only, but the
+folder was kept to avoid renaming imports throughout the codebase.
 
-## Status
+## Current Scope
 
-Phases 1–4 are complete: foundation & UI, purchase & stock management,
-customer management & ledger, and billing & invoicing (with automatic
-stock deduction, purchase-price snapshotting, and customer outstanding
-tracking). See commit history for details on each phase.
+The app currently covers foundation/UI, purchase and stock management,
+customer management and ledger tracking, and billing and invoicing with
+automatic stock deduction, purchase-price snapshotting, and customer
+outstanding tracking.
