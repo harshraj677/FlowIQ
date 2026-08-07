@@ -5,12 +5,12 @@ import { productKeys } from './useProducts';
 
 export const purchaseKeys = {
   all: ['purchases'] as const,
-  list: (page: number) => ['purchases', page] as const,
+  list: (page: number, limit: number) => ['purchases', page, limit] as const,
 };
 
 export function usePurchases(page = 1, limit = 20) {
   return useQuery({
-    queryKey: purchaseKeys.list(page),
+    queryKey: purchaseKeys.list(page, limit),
     queryFn: () => purchasesApi.list(page, limit),
   });
 }

@@ -6,7 +6,8 @@ import { productKeys } from './useProducts';
 
 export const invoiceKeys = {
   all: ['invoices'] as const,
-  list: (filters: InvoiceListFilters, page: number) => ['invoices', 'list', filters, page] as const,
+  list: (filters: InvoiceListFilters, page: number, limit: number) =>
+    ['invoices', 'list', filters, page, limit] as const,
   detail: (id: string) => ['invoices', id] as const,
 };
 
@@ -17,7 +18,7 @@ export function useInvoices(
   enabled = true,
 ) {
   return useQuery({
-    queryKey: invoiceKeys.list(filters, page),
+    queryKey: invoiceKeys.list(filters, page, limit),
     queryFn: () => invoicesApi.list(filters, page, limit),
     enabled,
   });

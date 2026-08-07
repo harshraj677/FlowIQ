@@ -5,8 +5,8 @@ import type { CustomerStatus } from '@/types';
 
 export const customerKeys = {
   all: ['customers'] as const,
-  list: (filters: CustomerListFilters, page: number) =>
-    ['customers', 'list', filters, page] as const,
+  list: (filters: CustomerListFilters, page: number, limit: number) =>
+    ['customers', 'list', filters, page, limit] as const,
   detail: (id: string) => ['customers', id] as const,
   ledger: (id: string) => ['customers', id, 'ledger'] as const,
   summary: ['customers', 'summary'] as const,
@@ -14,7 +14,7 @@ export const customerKeys = {
 
 export function useCustomers(filters: CustomerListFilters, page = 1, limit = 20) {
   return useQuery({
-    queryKey: customerKeys.list(filters, page),
+    queryKey: customerKeys.list(filters, page, limit),
     queryFn: () => customersApi.list(filters, page, limit),
   });
 }
